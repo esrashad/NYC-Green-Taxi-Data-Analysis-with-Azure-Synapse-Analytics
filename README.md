@@ -13,6 +13,20 @@ This project utilizes Azure Synapse Analytics with serverless SQL pools to handl
 ![image](https://github.com/user-attachments/assets/d64631ff-f0b5-4458-843d-e4e4cae69b14)
 2-UpLoad NYC Taxi data to Data Lake
 ![image](https://github.com/user-attachments/assets/3cbb656b-a2b7-45c2-8c04-cfbcd9b899ac)
+3-Explore the data
+  ###### -Query CSV files
+    -Query taxi_zone.csv 
+    -Query Calender_file.csv
+    -Query Vendor_file.csv
+    -Query_trip_type_file.tsv
+  ###### -Query JSON files
+    -Query payment_type.json 
+    -Query rate_code.json
+  ###### -Query Folders and Subfolders
+    -
+  
+   
+        
 
 
 
