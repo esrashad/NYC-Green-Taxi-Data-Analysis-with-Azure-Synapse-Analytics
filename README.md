@@ -13,7 +13,11 @@ This project utilizes Azure Synapse Analytics with serverless SQL pools to handl
 ![image](https://github.com/user-attachments/assets/d64631ff-f0b5-4458-843d-e4e4cae69b14)
 2-UpLoad NYC Taxi data to Data Lake
 ![image](https://github.com/user-attachments/assets/3cbb656b-a2b7-45c2-8c04-cfbcd9b899ac)
-3-Explore the data
+  
+
+# Project Requirement
+## 1- Data Discovery
+We want to ensure that the quality of the data is good and also the data would offer the business value.
   ###### -Query CSV files
     -Query taxi_zone.csv 
     -Query Calender_file.csv
@@ -23,16 +27,8 @@ This project utilizes Azure Synapse Analytics with serverless SQL pools to handl
     -Query payment_type.json 
     -Query rate_code.json
   ###### -Query Folders and Subfolders
-    -
-  
-   
-        
-
-
-
-# Project Requirement
-## 1- Data Discovery
-We want to ensure that the quality of the data is good and also the data would offer the business value.
+    -Query trip_data_green_csv Folder
+    -Query trip_data_green_parquet Folder
 
 ## 2-Data Ingestion
 -Ingested data to be stored as Parquet.
