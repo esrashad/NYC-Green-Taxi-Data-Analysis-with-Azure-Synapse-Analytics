@@ -1,0 +1,20 @@
+{
+	"name": "explore_trip_data_green_parquet",
+	"properties": {
+		"folder": {
+			"name": "nyc-green-taxi/discovery"
+		},
+		"content": {
+			"query": "SELECT trip_data_green_parquet.filename() as file_name,trip_data_green_parquet.*\nFROM\n    OPENROWSET(\n        BULK 'trip_data_green_parquet/year=*/month=*/*.parquet',\n        DATA_SOURCE='nyc_green_taxi_data_raw',\n        FORMAT = 'PARQUET'\n    ) \n   AS trip_data_green_parquet;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "nyc_green_taxi_discovery",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

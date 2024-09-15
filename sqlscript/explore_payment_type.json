@@ -1,0 +1,20 @@
+{
+	"name": "explore_payment_type",
+	"properties": {
+		"folder": {
+			"name": "nyc-green-taxi/discovery"
+		},
+		"content": {
+			"query": "SELECT payment_type, payment_type_desc\nFROM\n    OPENROWSET(\n        BULK 'payment_type.json',\n        DATA_SOURCE='nyc_green_taxi_data_raw',\n        FORMAT = 'CSV',\n        FIELDQUOTE = '0x0b',\n        FIELDTERMINATOR ='0x0b'\n    ) \n    WITH (\n        JSONDoc VARCHAR(MAX)\n        )AS payment_type\n    CROSS Apply OPENJSON(JSONDoc)\n    WITH(\n        payment_type SMALLINT,\n        payment_type_desc VARCHAR(20)\n\n    );\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "nyc_green_taxi_discovery",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"name": "transform_data",
+	"properties": {
+		"folder": {
+			"name": "nyc-green-taxi/discovery"
+		},
+		"content": {
+			"query": "USE nyc_green_taxi_discovery\n\n--Get number of trips for each hour\nSELECT DATEDIFF(MINUTE,Lpep_pickup_datetime,Lpep_dropoff_datetime)/60 as from_hour,\n    (DATEDIFF(MINUTE,Lpep_pickup_datetime,Lpep_dropoff_datetime)/60) + 1 as to_hour,\n    COUNT(1) as number_of_trips\nFROM\n    OPENROWSET(\n        BULK 'trip_data_green_parquet/year=*/month=*/*.parquet',\n        DATA_SOURCE='nyc_green_taxi_data_raw',\n        FORMAT = 'PARQUET'\n    ) \n   AS trip_data_green_parquet\nGROUP BY DATEDIFF(MINUTE,Lpep_pickup_datetime,Lpep_dropoff_datetime)/60 ,\n(DATEDIFF(MINUTE,Lpep_pickup_datetime,Lpep_dropoff_datetime)/60)+1 \nORDER BY from_hour,to_hour;\n    ",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "nyc_green_taxi_discovery",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

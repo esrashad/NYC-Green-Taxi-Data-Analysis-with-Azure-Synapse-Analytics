@@ -1,0 +1,20 @@
+{
+	"name": "silver_trip_data_green",
+	"properties": {
+		"folder": {
+			"name": "nyc-green-taxi/ldw"
+		},
+		"content": {
+			"query": "USE nyc_green_taxi_ldw\nGO \n/*\nIF OBJECT_ID('silver.trip_data_green') IS NOT NULL \n    DROP EXTERNAL TABLE silver.trip_data_green\nGO\nCREATE EXTERNAL TABLE silver.trip_data_green\n    WITH(\n        DATA_SOURCE=nyc_green_taxi_src,\n        LOCATION='silver/trip_data_green',\n        FILE_FORMAT=parquet_file_format\n\n    )\nAS \nSELECT * \n FROM bronze.trip_data_green_csv;\n\n\nSELECT * FROM silver.trip_data_green;\n*/\n\n\n\nEXEC silver.usp_silver_trip_data_green '2020', '01';\n\nEXEC silver.usp_silver_trip_data_green '2020', '02';\n\nEXEC silver.usp_silver_trip_data_green '2020', '03';\n\nEXEC silver.usp_silver_trip_data_green '2020', '04';\n\nEXEC silver.usp_silver_trip_data_green '2020', '05';\n\nEXEC silver.usp_silver_trip_data_green '2020', '06';\n\nEXEC silver.usp_silver_trip_data_green '2020', '07';\n\nEXEC silver.usp_silver_trip_data_green '2020', '08';\n\nEXEC silver.usp_silver_trip_data_green '2020', '09';\n\nEXEC silver.usp_silver_trip_data_green '2020', '10';\n\nEXEC silver.usp_silver_trip_data_green '2020', '11';\n\nEXEC silver.usp_silver_trip_data_green '2020', '12';\n\nEXEC silver.usp_silver_trip_data_green '2021', '01';\n\nEXEC silver.usp_silver_trip_data_green '2021', '02';\n\nEXEC silver.usp_silver_trip_data_green '2021', '03';\n\nEXEC silver.usp_silver_trip_data_green '2021', '04';\n\nEXEC silver.usp_silver_trip_data_green '2021', '05';\n\nEXEC silver.usp_silver_trip_data_green '2021', '06';\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "nyc_green_taxi_ldw",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

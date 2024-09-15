@@ -1,0 +1,20 @@
+{
+	"name": "extenal_data_source",
+	"properties": {
+		"folder": {
+			"name": "nyc-green-taxi/ldw"
+		},
+		"content": {
+			"query": "IF NOT EXISTS (SELECT * FROM sys.external_data_sources where name='nyc_green_taxi_src')\nCREATE EXTERNAL DATA SOURCE nyc_green_taxi_src\nWITH\n(   LOCATION = 'https://nyctaxisynapsedl.dfs.core.windows.net/nyc-green-taxi-data'\n);",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "nyc_green_taxi_ldw",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

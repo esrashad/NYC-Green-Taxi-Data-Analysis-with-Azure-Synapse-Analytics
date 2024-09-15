@@ -1,0 +1,20 @@
+{
+	"name": "explore_trip_data_green_csv",
+	"properties": {
+		"folder": {
+			"name": "nyc-green-taxi/discovery"
+		},
+		"content": {
+			"query": "SELECT trip_data_green_csv.filename() as file_name,trip_data_green_csv.*\nFROM\n    OPENROWSET(\n        BULK 'trip_data_green_csv/year=*/month=*/*.csv',\n        DATA_SOURCE='nyc_green_taxi_data_raw',\n        FORMAT = 'CSV',\n        PARSER_VERSION = '2.0',\n        HEADER_ROW = TRUE   \n    ) \n   AS trip_data_green_csv;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "nyc_green_taxi_discovery",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

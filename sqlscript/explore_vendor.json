@@ -1,0 +1,20 @@
+{
+	"name": "explore_vendor",
+	"properties": {
+		"folder": {
+			"name": "nyc-green-taxi/discovery"
+		},
+		"content": {
+			"query": "SELECT\n    *\nFROM\n    OPENROWSET(\n        BULK 'vendor.csv',\n        Data_Source='nyc_green_taxi_data_raw',\n        FORMAT = 'CSV',\n        PARSER_VERSION = '2.0',\n        HEADER_ROW = TRUE\n    ) AS vendor;\n\nEXEC sp_describe_first_result_set N'\nSELECT\n    *\nFROM\n    OPENROWSET(\n        BULK ''vendor.csv'',\n        Data_Source=''nyc_green_taxi_data_raw'',\n        FORMAT = ''CSV'',\n        PARSER_VERSION = ''2.0'',\n        HEADER_ROW = TRUE\n    ) AS vendor';\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "nyc_green_taxi_discovery",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
