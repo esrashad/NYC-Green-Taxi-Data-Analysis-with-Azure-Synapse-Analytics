@@ -30,6 +30,7 @@ We want to ensure that the quality of the data is good and also the data would o
   ###### - Query Folders and Subfolders
     -Query trip_data_green_csv Folder
     -Query trip_data_green_parquet Folder
+    
    2- Discover the data
      - Identify duplicates in data
      - Check for missing data values
@@ -37,19 +38,30 @@ We want to ensure that the quality of the data is good and also the data would o
      - Join data from multiple files
      - Summarize/Aggregate data
      - Apply some transforms
-
-## 2-Data Ingestion
+     
+   3- Data Virsulaisation (Bronze Layer)
+    Combine data drom multible sources at query time without having to write complex pipelines to load the data.
+     
+## 2-Data Ingestion (Silver Layer)
 - Ingested data to be stored as Parquet.
 - Ingested data to be stored as Tables/Views.
 - Ability to query the ingested data unsing SQL.
 ![image](https://github.com/user-attachments/assets/8b5d4fe0-b9a8-48c0-b0e2-f0cb1adc3b08)
 
 
-## 3-Data Transformation
+## 3-Data Transformation (Gold Layer)
 - Join the key information required for reporting to create a new table.
 - Join the key information required for Analysis to create a new table.
 - Must be able to analyze the transformed data via SQL.
 - Transformed data must be stored in Parquet format.
+  ![image](https://github.com/user-attachments/assets/6eeb9227-6acc-415c-ae0c-209f7a5c4607)
+
+#### Requirement:
+##### Campaign to encourage credit card payments
+  - Trips made using credit card/ cash payments
+  - Payment behaviour during days of the week/ weekend
+  - Payment behaviour between boroughs
+
 
 ## 4-Reporting
 - Taxi Demand
