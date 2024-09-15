@@ -18,7 +18,8 @@ This project utilizes Azure Synapse Analytics with serverless SQL pools to handl
 # Project Requirement
 ## 1- Data Discovery
 We want to ensure that the quality of the data is good and also the data would offer the business value.
-1- Explore the data
+
+1-Explore the data
   ###### - Query CSV files
     -Query taxi_zone.csv 
     -Query Calender_file.csv
