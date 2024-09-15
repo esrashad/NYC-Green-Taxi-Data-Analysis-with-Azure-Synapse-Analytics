@@ -62,7 +62,8 @@ We want to ensure that the quality of the data is good and also the data would o
   - Trips made using credit card/ cash payments
   - Payment behaviour during days of the week/ weekend
   - Payment behaviour between boroughs
-
+###### The result:
+![image](https://github.com/user-attachments/assets/9dc8bc5e-97aa-422e-b687-21eba2e2529f)
 
 ## 4-Reporting
 - Taxi Demand
