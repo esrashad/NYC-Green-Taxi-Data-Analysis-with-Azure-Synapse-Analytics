@@ -18,6 +18,7 @@ This project utilizes Azure Synapse Analytics with serverless SQL pools to handl
 # Project Requirement
 ## 1- Data Discovery
 We want to ensure that the quality of the data is good and also the data would offer the business value.
+1- Explore the data
   ###### - Query CSV files
     -Query taxi_zone.csv 
     -Query Calender_file.csv
@@ -29,11 +30,20 @@ We want to ensure that the quality of the data is good and also the data would o
   ###### - Query Folders and Subfolders
     -Query trip_data_green_csv Folder
     -Query trip_data_green_parquet Folder
+   2- Discover the data
+     - Identify duplicates in data
+     - Check for missing data values
+     - Invalid/Unexpected data in columns
+     - Join data from multiple files
+     - Summarize/Aggregate data
+     - Apply some transforms
 
 ## 2-Data Ingestion
 - Ingested data to be stored as Parquet.
 - Ingested data to be stored as Tables/Views.
 - Ability to query the ingested data unsing SQL.
+![image](https://github.com/user-attachments/assets/8b5d4fe0-b9a8-48c0-b0e2-f0cb1adc3b08)
+
 
 ## 3-Data Transformation
 - Join the key information required for reporting to create a new table.
