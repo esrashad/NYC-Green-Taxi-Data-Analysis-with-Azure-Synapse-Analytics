@@ -18,38 +18,38 @@ This project utilizes Azure Synapse Analytics with serverless SQL pools to handl
 # Project Requirement
 ## 1- Data Discovery
 We want to ensure that the quality of the data is good and also the data would offer the business value.
-  ###### -Query CSV files
+  ###### - Query CSV files
     -Query taxi_zone.csv 
     -Query Calender_file.csv
     -Query Vendor_file.csv
     -Query_trip_type_file.tsv
-  ###### -Query JSON files
+  ###### - Query JSON files
     -Query payment_type.json 
     -Query rate_code.json
-  ###### -Query Folders and Subfolders
+  ###### - Query Folders and Subfolders
     -Query trip_data_green_csv Folder
     -Query trip_data_green_parquet Folder
 
 ## 2-Data Ingestion
--Ingested data to be stored as Parquet.
--Ingested data to be stored as Tables/Views.
--Ability to query the ingested data unsing SQL.
+- Ingested data to be stored as Parquet.
+- Ingested data to be stored as Tables/Views.
+- Ability to query the ingested data unsing SQL.
 
 ## 3-Data Transformation
--Join the key information required for reporting to create a new table.
--Join the key information required for Analysis to create a new table.
--Must be able to analyze the transformed data via SQL.
--Transformed data must be stored in Parquet format.
+- Join the key information required for reporting to create a new table.
+- Join the key information required for Analysis to create a new table.
+- Must be able to analyze the transformed data via SQL.
+- Transformed data must be stored in Parquet format.
 
 ## 4-Reporting
--Taxi Demand
--Credit Card Campaign
--Operational Reporting
+- Taxi Demand
+- Credit Card Campaign
+- Operational Reporting
 
 ## 5-Sceduling
--Monitor Pipelines.
--Set-up alerts on failures.
--Set-up alerts.
--Run at regular interval.
+- Monitor Pipelines.
+- Set-up alerts on failures.
+- Set-up alerts.
+- Run at regular interval.
 
 
