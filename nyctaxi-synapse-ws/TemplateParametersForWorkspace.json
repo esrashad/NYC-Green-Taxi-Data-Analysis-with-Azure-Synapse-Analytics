@@ -10,6 +10,9 @@
 		},
 		"nyctaxi-synapse-ws-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"value": "https://nyctaxisynapsedl.dfs.core.windows.net"
+		},
+		"ls_nyctaxisynapsedl_properties_typeProperties_url": {
+			"value": "https://nyctaxisynapsedl.dfs.core.windows.net/"
 		}
 	}
 }
