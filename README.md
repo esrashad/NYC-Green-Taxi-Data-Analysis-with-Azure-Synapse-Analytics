@@ -65,6 +65,16 @@ We want to ensure that the quality of the data is good and also the data would o
 ###### The result:
 ![image](https://github.com/user-attachments/assets/9dc8bc5e-97aa-422e-b687-21eba2e2529f)
 
+#### Requirement 2:
+##### Identify taxi demand
+  - Demand based on borough
+  - Demand based on day of the week/ weekend
+  - Demand based on trip type (i.e., Street hail/ Despatch)
+  - Trip distance, trip duration, total fare amount etc per day/ borough
+###### The result:
+![image](https://github.com/user-attachments/assets/cdf62c55-0b49-4e9c-8277-1c4ce0566aab)
+
+
 ## 4-Reporting
 - Taxi Demand
 - Credit Card Campaign
