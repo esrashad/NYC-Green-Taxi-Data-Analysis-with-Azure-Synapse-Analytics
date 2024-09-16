@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "ds_silver_taxi_zone",
+						"referenceName": "ds_nyc_taxi_data_dynamic",
 						"type": "DatasetReference"
 					},
 					"enableLogging": false,

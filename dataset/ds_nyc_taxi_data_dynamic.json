@@ -1,16 +1,24 @@
 {
-	"name": "ds_silver_taxi_zone",
+	"name": "ds_nyc_taxi_data_dynamic",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_nyctaxisynapsedl",
 			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"p_folder_path": {
+				"type": "string"
+			}
 		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "silver/taxi_zone",
+				"folderPath": {
+					"value": "@dataset().p_folder_path",
+					"type": "Expression"
+				},
 				"fileSystem": "nyc-green-taxi-data"
 			},
 			"compressionCodec": "snappy"
