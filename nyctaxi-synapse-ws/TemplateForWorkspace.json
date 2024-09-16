@@ -114,6 +114,76 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/create_usp_silver_taxi_zone')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "Delete Folder IF Exists",
+						"type": "Delete",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "ds_silver_taxi_zone",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"enableLogging": false,
+							"storeSettings": {
+								"type": "AzureBlobFSReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							}
+						}
+					},
+					{
+						"name": "Silver_Taxi_Zone_Table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Delete Folder IF Exists",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[silver].[usp_silver_taxi_zone]"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_serverless_sql_pool_nyc_green_taxi_ldw_db",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/datasets/ds_silver_taxi_zone')]",
+				"[concat(variables('workspaceId'), '/linkedServices/ls_serverless_sql_pool_nyc_green_taxi_ldw_db')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/ds_silver_taxi_zone')]",
 			"type": "Microsoft.Synapse/workspaces/datasets",
 			"apiVersion": "2019-06-01-preview",
@@ -900,6 +970,29 @@
 				},
 				"content": {
 					"query": "USE nyc_green_taxi_ldw\nGO\n\nCREATE OR ALTER PROCEDURE gold.usp_gold_trip_data_green\n@year VARCHAR(4),\n@month VARCHAR(2)\nAS \nBEGIN\n    DECLARE @create_sql_stmt NVARCHAR(MAX),\n            @drop_sql_stmt NVARCHAR(MAX);\n\n    SET @create_sql_stmt =\n    'CREATE EXTERNAL TABLE gold.trip_data_green_' + @year + '_' + @month + ' WITH(\n        DATA_SOURCE = nyc_green_taxi_src,\n        LOCATION = ''gold/trip_data_green/year=' + @year + '/month=' + @month + ''',\n        FILE_FORMAT = parquet_file_format\n    ) AS \n    SELECT \n    td.year,\n    td.month,\n    tz.borough,\n    CONVERT(DATE,td.lpep_pickup_datetime) AS trip_date,\n    cal.day_name AS trip_day,\n    CASE WHEN cal.day_name IN (''Saturday'',''Sunday'') THEN ''Y'' ELSE ''N'' END AS trip_day_weekend,\n    SUM(CASE WHEN pt.payment_type_desc=''Credit card'' THEN 1 ELSE 0 END) AS card_count,\n    SUM(CASE WHEN pt.payment_type_desc=''Cash'' THEN 1 ELSE 0 END) AS cash_count,\n    SUM(CASE WHEN tt.trip_type_desc=''Street-hail'' THEN 1 ELSE 0 END) AS street_hail_count,\n    SUM(CASE WHEN tt.trip_type_desc=''Dispatch'' THEN 1 ELSE 0 END) AS dispatch_count,\n    SUM(td.trip_distance) AS trip_distance,\n    SUM(DATEDIFF(MINUTE,td.lpep_pickup_datetime,td.lpep_dropoff_datetime)) AS trip_duration,\n    SUM(td.fare_amount) AS fare_amount\n\n    FROM silver.vw_trip_data_green AS td\n    JOIN silver.taxi_zone tz ON (td.PULocationID=tz.LocationID) \n    JOIN silver.calendar cal ON (cal.date=CONVERT(DATE,td.lpep_pickup_datetime))\n    JOIN silver.payment_type pt ON (td.payment_type=pt.payment_type)\n    JOIN silver.trip_type tt ON (td.trip_type=tt.trip_type)\n    WHERE td.year = ''' + @year + '''\n    AND td.month = ''' + @month + '''\n    GROUP BY td.year,\n        td.month,\n        tz.borough,\n        CONVERT(DATE,td.lpep_pickup_datetime),\n        cal.day_name' ;\n\n    EXEC sp_executesql @create_sql_stmt;\n\n    SET @drop_sql_stmt =\n    'DROP EXTERNAL TABLE gold.trip_data_green_' + @year + '_' + @month;\n\n    EXEC sp_executesql @drop_sql_stmt;\n\nEND;\n\n\n\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "nyc_green_taxi_ldw",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/usp_silver_taxi_zone')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"folder": {
+					"name": "nyc-green-taxi/ldw/usp"
+				},
+				"content": {
+					"query": "USE nyc_green_taxi_ldw\nGO \n\nCREATE OR ALTER PROCEDURE silver.usp_silver_taxi_zone\nAS\nBEGIN\n    IF OBJECT_ID('silver.taxi_zone') IS NOT NULL \n        DROP EXTERNAL TABLE silver.taxi_zone;\n\n    CREATE EXTERNAL TABLE silver.taxi_zone\n        WITH(\n            DATA_SOURCE=nyc_green_taxi_src,\n            LOCATION='silver/taxi_zone',\n            FILE_FORMAT=parquet_file_format\n\n        )\n    AS \n    SELECT * \n    FROM bronze.taxi_zone;\nEND;\n\n\nSELECT * FROM silver.taxi_zone;",
 					"metadata": {
 						"language": "sql"
 					},
