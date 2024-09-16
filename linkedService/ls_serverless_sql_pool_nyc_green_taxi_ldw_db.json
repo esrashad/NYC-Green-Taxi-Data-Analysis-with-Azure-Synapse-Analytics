@@ -1,0 +1,18 @@
+{
+	"name": "ls_serverless_sql_pool_nyc_green_taxi_ldw_db",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDW",
+		"typeProperties": {
+			"server": "nyctaxi-synapse-ws-ondemand.sql.azuresynapse.net,1433",
+			"database": "nyc_green_taxi_ldw",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SystemAssignedManagedIdentity"
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
