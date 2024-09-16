@@ -86,4 +86,10 @@ We want to ensure that the quality of the data is good and also the data would o
 - Set-up alerts.
 - Run at regular interval.
 
+#### Silver Tables Pipeline:
+![image](https://github.com/user-attachments/assets/3eb28475-5281-41e6-9a74-2cbed87a9071)
+
+
+
+
 
