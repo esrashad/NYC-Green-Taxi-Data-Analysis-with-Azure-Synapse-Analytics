@@ -11,6 +11,12 @@
 		"ls_nyctaxisynapsedl_properties_typeProperties_url": {
 			"value": "https://nyctaxisynapsedl.dfs.core.windows.net/"
 		},
+		"ls_serverless_sql_pool_nyc_green_taxi_ldw_db_properties_typeProperties_server": {
+			"value": "nyctaxi-synapse-ws-ondemand.sql.azuresynapse.net,1433"
+		},
+		"ls_serverless_sql_pool_nyc_green_taxi_ldw_db_properties_typeProperties_database": {
+			"value": "nyc_green_taxi_ldw"
+		},
 		"nyctaxi-synapse-ws-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"value": "https://nyctaxisynapsedl.dfs.core.windows.net"
 		}
