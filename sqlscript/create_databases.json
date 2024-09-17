@@ -5,7 +5,7 @@
 			"name": "nyc-green-taxi/ldw"
 		},
 		"content": {
-			"query": "CREATE DATABASE nyc_green_taxi_ldw\nGO\n\nALTER DATABASE nyc_green_taxi_discovery COLLATE Latin1_General_100_CI_AI_SC_UTF8\nGO\n\nUSE nyc_green_taxi_ldw\nGO\n\nCREATE SCHEMA bronze\nGO\n\nCREATE SCHEMA silver\nGO\n\nCREATE SCHEMA gold\nGO\n\n",
+			"query": "CREATE DATABASE nyc_green_taxi_ldw\nGO\n\nALTER DATABASE nyc_green_taxi_ldw COLLATE Latin1_General_100_CI_AI_SC_UTF8\nGO\n\nUSE nyc_green_taxi_ldw\nGO\n\nCREATE SCHEMA bronze\nGO\n\nCREATE SCHEMA silver\nGO\n\nCREATE SCHEMA gold\nGO\n\n",
 			"metadata": {
 				"language": "sql"
 			},
