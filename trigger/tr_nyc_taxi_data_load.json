@@ -3,21 +3,14 @@
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Started",
-		"pipelines": [
-			{
-				"pipelineReference": {
-					"referenceName": "Pl_execute_all_pipelines",
-					"type": "PipelineReference"
-				}
-			}
-		],
+		"pipelines": [],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
 				"frequency": "Minute",
 				"interval": 15,
-				"startTime": "2024-09-17T18:30:00",
-				"endTime": "2024-09-18T19:00:00",
+				"startTime": "2024-09-17T15:30:00",
+				"endTime": "2024-09-18T16:00:00",
 				"timeZone": "Egypt Standard Time"
 			}
 		}
