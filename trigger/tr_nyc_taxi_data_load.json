@@ -2,15 +2,15 @@
 	"name": "tr_nyc_taxi_data_load",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
 				"frequency": "Minute",
 				"interval": 15,
-				"startTime": "2024-09-17T15:30:00",
-				"endTime": "2024-09-18T16:00:00",
+				"startTime": "2024-09-17T15:36:00",
+				"endTime": "2024-09-17T16:30:00",
 				"timeZone": "Egypt Standard Time"
 			}
 		}
