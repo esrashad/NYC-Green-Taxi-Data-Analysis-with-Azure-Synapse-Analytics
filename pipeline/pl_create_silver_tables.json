@@ -1,5 +1,5 @@
 {
-	"name": "create_silver_tables",
+	"name": "pl_create_silver_tables",
 	"properties": {
 		"activities": [
 			{

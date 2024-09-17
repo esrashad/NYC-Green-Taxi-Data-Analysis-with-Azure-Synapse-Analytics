@@ -1,0 +1,171 @@
+{
+	"name": "pl_silver_trip_data_green",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Year And Month",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "ls_serverless_sql_pool_nyc_green_taxi_ldw_db",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "USE nyc_green_taxi_ldw;\n\nSELECT DISTINCT \n    year,month\nFROM bronze.vw_trip_data_green_csv;"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "ForEach Year And Month",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get Year And Month",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Year And Month').output.resultSets[0].rows",
+						"type": "Expression"
+					},
+					"batchCount": 5,
+					"activities": [
+						{
+							"name": "Delete File If Exists",
+							"type": "Delete",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "ds_nyc_taxi_data_dynamic",
+									"type": "DatasetReference",
+									"parameters": {
+										"p_folder_path": {
+											"value": "silver/trip_data_green/year=@{item().year}/month=@{item().month}",
+											"type": "Expression"
+										}
+									}
+								},
+								"enableLogging": false,
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							}
+						},
+						{
+							"name": "Create Partition",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Delete File If Exists",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[silver].[usp_silver_trip_data_green]",
+								"storedProcedureParameters": {
+									"month": {
+										"value": {
+											"value": "@item().month",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"year": {
+										"value": {
+											"value": "@item().year",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "ls_serverless_sql_pool_nyc_green_taxi_ldw_db",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Silver View",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "ForEach Year And Month",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "ls_serverless_sql_pool_nyc_green_taxi_ldw_db",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "NonQuery",
+							"text": "USE nyc_green_taxi_ldw"
+						},
+						{
+							"type": "NonQuery",
+							"text": "DROP VIEW IF EXISTS silver.vw_trip_data_green"
+						},
+						{
+							"type": "NonQuery",
+							"text": "CREATE VIEW silver.vw_trip_data_green\nAS\nSELECT  result.filepath(1) AS year,\n        result.filepath(2) As month,\n        result.*\nFROM\n    OPENROWSET(\n        BULK 'silver/trip_data_green/year=*/month=*/*.parquet',\n        DATA_SOURCE='nyc_green_taxi_src',\n        FORMAT = 'PARQUET'\n    ) \n    WITH(\n        VendorID                        INT,\n        lpep_pickup_datetime            DATETIME2(7),\n        lpep_dropoff_datetime           DATETIME2(7),    \n        store_and_fwd_flag              CHAR(1),\n        RatecodeID                      INT,\n        PULocationID                    INT,\n        DOLocationID                    INT,\n        passenger_count                 INT,\n        trip_distance                   FLOAT,\n        fare_amount                     FLOAT,\n        extra                           FLOAT,\n        mta_tax                         FLOAT,\n        tip_amount                      FLOAT,\n        tolls_amount                    FLOAT,\n        ehail_fee                       INT,\n        improvement_surcharge           FLOAT,\n        total_amount                    FLOAT,\n        payment_type                    INT,\n        trip_type                       INT,\n        congestion_surcharge            FLOAT\n        )as  [result];"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
