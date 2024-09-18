@@ -75,12 +75,7 @@ We want to ensure that the quality of the data is good and also the data would o
 ![image](https://github.com/user-attachments/assets/cdf62c55-0b49-4e9c-8277-1c4ce0566aab)
 
 
-## 4-Reporting
-- Taxi Demand
-- Credit Card Campaign
-- Operational Reporting
-
-## 5-Sceduling
+## 4-Sceduling
 - Monitor Pipelines.
 - Set-up alerts on failures.
 - Set-up alerts.
@@ -89,7 +84,22 @@ We want to ensure that the quality of the data is good and also the data would o
 #### Silver Tables Pipeline:
 ![image](https://github.com/user-attachments/assets/3eb28475-5281-41e6-9a74-2cbed87a9071)
 
+##### Silver trip data green folder pipeline:
+![Screenshot 2024-09-17 155829](https://github.com/user-attachments/assets/0afaa9bb-e04b-4b85-b6e0-c0a536ce411d)
 
+gold trip data green folder pipeline:
+![Screenshot 2024-09-17 164138](https://github.com/user-attachments/assets/2df344b7-a918-4b9a-83e0-8a6e4429497a)
 
+##### Execute all pipelines:
+![Screenshot 2024-09-17 180443](https://github.com/user-attachments/assets/8a30b944-ffcd-4c5b-b845-4e37a3e90231)
+
+#### Make Trigger to schedual the execute pipeline:
+![Screenshot 2024-09-17 182759](https://github.com/user-attachments/assets/8dfb2b31-8e38-4b6a-a6bf-fe2561d9764b)
+
+## 5-Reporting
+- Taxi Demand
+- Credit Card Campaign
+- Operational Reporting
+  ![image](https://github.com/user-attachments/assets/ab40607a-ce51-4233-9aff-30914d47590c)
 
 
