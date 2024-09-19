@@ -38,6 +38,15 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('workspaceName'), '/nyc_taxi_dwh')]",
+			"type": "Microsoft.Synapse/workspaces/sqlPools",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/Pl_execute_all_pipelines')]",
 			"type": "Microsoft.Synapse/workspaces/pipelines",
 			"apiVersion": "2019-06-01-preview",
@@ -922,6 +931,29 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/ctas_trip_data_green')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"folder": {
+					"name": "nyc-green-taxi/dwh"
+				},
+				"content": {
+					"query": "CREATE SCHEMA staging\nGO\n\nIF NOT EXISTS (SELECT * FROM sys.external_file_formats WHERE name = 'SynapseParquetFormat') \n\tCREATE EXTERNAL FILE FORMAT parquet_file_format\n\tWITH ( FORMAT_TYPE = PARQUET)\nGO\n\nIF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = 'nyc_green_taxi_src') \n\tCREATE EXTERNAL DATA SOURCE nyc_green_taxi_src \n\tWITH (\n\t\tLOCATION = 'abfss://nyc-green-taxi-data@nyctaxisynapsedl.dfs.core.windows.net' \n\t)\nGO\n\nCREATE EXTERNAL TABLE staging.trip_data_green (\n\t[year] nvarchar(4000),\n\t[month] nvarchar(4000),\n\t[borough] nvarchar(4000),\n\t[trip_date] date,\n\t[trip_day] nvarchar(4000),\n\t[trip_day_weekend] nvarchar(4000),\n\t[card_count] int,\n\t[cash_count] int,\n\t[trip_distance] float,\n\t[trip_duration] int,\n\t[fare_amount] float\n\t)\n\tWITH (\n\tLOCATION = 'gold/trip_data_green',\n\tDATA_SOURCE = nyc_green_taxi_src,\n\tFILE_FORMAT = parquet_file_format\n\t)\nGO\n\n\nSELECT TOP 100 * FROM staging.trip_data_green\nGO\n\nCREATE SCHEMA dwh\nGO\n\nCREATE TABLE dwh.trip_data_green\nWITH (CLUSTERED COLUMNSTORE INDEX,\n\t DISTRIBUTION =ROUND_ROBIN)\nAS\nSELECT  * FROM staging.trip_data_green\nGO\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "nyc_taxi_dwh",
+						"poolName": "nyc_taxi_dwh"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/explore_calendar')]",
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
@@ -1654,6 +1686,18 @@
 				"sparkVersion": "3.4",
 				"isComputeIsolationEnabled": false,
 				"sessionLevelPackagesEnabled": true,
+				"annotations": []
+			},
+			"dependsOn": [],
+			"location": "uksouth"
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/nyc_taxi_dwh')]",
+			"type": "Microsoft.Synapse/workspaces/sqlPools",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"collation": "SQL_Latin1_General_CP1_CI_AS",
+				"maxSizeBytes": 263882790666240,
 				"annotations": []
 			},
 			"dependsOn": [],
