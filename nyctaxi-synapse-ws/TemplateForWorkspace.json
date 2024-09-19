@@ -1483,6 +1483,29 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/trip_data_green_copy')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"folder": {
+					"name": "nyc-green-taxi/dwh"
+				},
+				"content": {
+					"query": "COPY INTO dwh.trip_data_green_copy\nFROM 'https://nyctaxisynapsedl.dfs.core.windows.net/nyc-green-taxi-data/gold/trip_data_green'\nWITH\n(\n\tFILE_TYPE = 'PARQUET'\n\t,MAXERRORS = 0\n\t,COMPRESSION = 'snappy'\n\t,AUTO_CREATE_TABLE='ON'\n)\nGO\n\nSELECT TOP 100 * FROM dwh.trip_data_green_copy\nGO",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "nyc_taxi_dwh",
+						"poolName": "nyc_taxi_dwh"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/usp_gold_trip_data_green')]",
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
