@@ -100,6 +100,7 @@ gold trip data green folder pipeline:
 - Taxi Demand
 - Credit Card Campaign
 - Operational Reporting
-  ![image](https://github.com/user-attachments/assets/ab40607a-ce51-4233-9aff-30914d47590c)
+![image](https://github.com/user-attachments/assets/bc955798-0402-4eb7-a348-dee73c7668eb)
+
 
 
