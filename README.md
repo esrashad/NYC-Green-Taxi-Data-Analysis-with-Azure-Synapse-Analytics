@@ -1,7 +1,7 @@
 ## NYC-Green-Taxi-Data-Analysis-with-Azure-Synapse-Analytics
 
 ### Summary
-This project utilizes Azure Synapse Analytics with serverless SQL pools to handle large-scale data ingestion and transformation tasks. It provides a practical guide to processing data with SQL and Apache Spark, demonstrating how to transform and analyze datasets efficiently. The project also includes creating interactive visualizations with Power BI to extract valuable insights.
+This project utilizes Azure Synapse Analytics with serverless SQL pools to handle large-scale data ingestion and transformation tasks. It provides a practical guide to processing data with SQL , demonstrating how to transform and analyze datasets efficiently. The project also includes creating interactive visualizations with Power BI to extract valuable insights.
 
 ### Dataset Overview
 ![image](https://github.com/user-attachments/assets/25c4244a-7520-4c3a-8bd0-1ec4042b81cc)
@@ -101,6 +101,39 @@ gold trip data green folder pipeline:
 - Credit Card Campaign
 - Operational Reporting
 ![image](https://github.com/user-attachments/assets/bc955798-0402-4eb7-a348-dee73c7668eb)
+
+
+##### Synapse Link For Cosmos DB:
+- NYC Taxis are fitted with a device to manage taxi hires
+- Device sends data to Cosmos DB every minute
+- Create a Cosmos DB analytic store using Synapse Link 
+- Ability to query and make data available to PowerBI using Serverless SQL Pool
+##### The Result:
+![Screenshot 2024-09-19 182227](https://github.com/user-attachments/assets/3ba9ec0e-136d-4d58-9180-a4bb4760ab8f)
+
+## Use Dedicated SQL pool as a serving layer
+#### Requirements
+![Screenshot 2024-09-19 204913](https://github.com/user-attachments/assets/0de4980e-d620-4fca-8548-a55d1fc72844)
+1) Create Dedicated SQL Pool
+![Screenshot 2024-09-19 211548](https://github.com/user-attachments/assets/4c9e813b-3e5b-4e33-8319-c5999e6bcc64)
+2) Create External Table staging.trip_data_green
+3) Copy the data from external table into physical table
+`COPY INTO dwh.trip_data_green_copy`
+`FROM 'https://nyctaxisynapsedl.dfs.core.windows.net/nyc-green-taxi-data/gold/trip_data_green'`
+`WITH`
+`(`
+    `FILE_TYPE = 'PARQUET'`
+    `,MAXERRORS = 0`
+    `,COMPRESSION = 'snappy'`
+    `,AUTO_CREATE_TABLE='ON'`
+`)`
+`GO`
+`SELECT TOP 100 * FROM dwh.trip_data_green_copy`
+`GO`
+
+
+
+
 
 
 
