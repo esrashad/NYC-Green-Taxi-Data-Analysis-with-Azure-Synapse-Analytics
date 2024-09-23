@@ -31,12 +31,12 @@ We want to ensure that the quality of the data is good and also the data would o
     -Query trip_data_green_parquet Folder
     
    2- Discover the data
-     - Identify duplicates in data
-     - Check for missing data values
-     - Invalid/Unexpected data in columns
-     - Join data from multiple files
-     - Summarize/Aggregate data
-     - Apply some transforms
+   -  Identify duplicates in data
+   -  Check for missing data values
+   -  Invalid/Unexpected data in columns
+   -  Join data from multiple files
+   -  Summarize/Aggregate data
+   -  Apply some transforms
      
    3- Data Virsulaisation (Bronze Layer)
     Combine data drom multible sources at query time without having to write complex pipelines to load the data.
