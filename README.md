@@ -38,8 +38,9 @@ We want to ensure that the quality of the data is good and also the data would o
    -  Summarize/Aggregate data
    -  Apply some transforms
      
-   3- Data Virsulaisation (Bronze Layer)
-    Combine data drom multible sources at query time without having to write complex pipelines to load the data.
+   3- Data Virsulaisation (Bronze Layer):
+   
+  Combine data from multible sources at query time without having to write complex pipelines to load the data.
      
 ## 2-Data Ingestion (Silver Layer)
 - Ingested data to be stored as Parquet.
