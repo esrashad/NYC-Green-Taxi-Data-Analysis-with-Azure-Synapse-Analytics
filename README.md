@@ -38,7 +38,7 @@ We want to ensure that the quality of the data is good and also the data would o
    -  Summarize/Aggregate data
    -  Apply some transforms
      
-   3- Data Virsulaisation (Bronze Layer):
+   3- Data Virtualisation (Bronze Layer):
    
   Combine data from multible sources at query time without having to write complex pipelines to load the data.
      
